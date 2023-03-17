@@ -20,21 +20,29 @@ public class clasePrueba {
         
         //ingresar primer artistas
         System.out.println("Ingrese datos del primer artista: ");
-        System.out.println("Nombre: ");
+        System.out.println("Nombre del artista: ");
         String nom = sc.next();
+        System.out.println("Nombre del disco: ");
+        String nomD = sc.next();
+        System.out.println("Codigos: ");
+        int cod = sc.nextInt();
         System.out.println("Ventas: ");
-        String ven = sc.next();
-        cantanteFamoso obj1 = new cantanteFamoso(nom, ven);
-        ob.ingresar(obj1); 
+        int ven = sc.nextInt();
+        cantanteFamoso obj1 = new cantanteFamoso(nomD, ven, cod);
+        ob.ingresar(cod, nom, obj1); 
         
         //ingresar segundo artista
-        System.out.println("Ingrese datos del primer artista: ");
-        System.out.println("Nombre: ");
+        System.out.println("Ingrese datos del segundo artista: ");
+        System.out.println("Nombre del artista: ");
         String nom1 = sc.next();
+        System.out.println("Nombre del disco: ");
+        String nomD1 = sc.next();
+        System.out.println("Codigos: ");
+        int cod1 = sc.nextInt();
         System.out.println("Ventas: ");
-        String ven2 = sc.next();
-        cantanteFamoso obj2 = new cantanteFamoso(nom1, ven2);
-        ob.ingresar(obj2); 
+        int ven1 = sc.nextInt();
+        cantanteFamoso obj2 = new cantanteFamoso(nomD1, ven1, cod1);
+        ob.ingresar(cod1, nom1, obj2); 
         
         //inicio del menu
         int opcion;
@@ -64,28 +72,32 @@ public class clasePrueba {
                 switch (opcion) {
 
                     case 1 -> {
-                        System.out.println("Ingrese datos del artista: ");
-                        System.out.println("Nombre: ");
-                        String nombre = sc.next();
+                        System.out.println("Nombre del artista: ");
+                        String nom2 = sc.next();
+                        System.out.println("Nombre del disco: ");
+                        String nomD2 = sc.next();
+                        System.out.println("Codigos: ");
+                        int cod2 = sc.nextInt();
                         System.out.println("Ventas: ");
-                        String ventas = sc.next();
-                        cantanteFamoso op = new cantanteFamoso(nombre, ventas);
-                        ob.ingresar(op); 
+                        int ven2= sc.nextInt();
+                        cantanteFamoso obj3 = new cantanteFamoso(nomD2, ven2, cod2);
+                        ob.ingresar(cod2, nom2, obj3); 
                         ob.imprimir();
                     }
 
                     case 2 -> {
 
-                        System.out.println("Ingrese nombre del artista a cambiar: ");
+                        System.out.println("Ingrese nuevo nombre: ");
                         String nom3 = sc.next();
-                        ob.actualizar(nom3); 
-                        System.out.println("Lista actualizada: ");
+                        System.out.println("Ingrese codigo del artista a cambiar: "); 
+                        int cod3 = sc.nextInt();
+                        ob.actualizar(nom3, cod3); 
                         ob.imprimir();
                     }
 
                     case 3 -> {
-                        System.out.println("Ingrese nombre del artista a eliminar: ");
-                        String nom4 = sc.next();
+                        System.out.println("Ingrese codigo del artista a eliminar: ");
+                        int nom4 = sc.nextInt();
                         ob.eliminar(nom4); 
                         ob.imprimir();
                       

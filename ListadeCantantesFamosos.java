@@ -7,7 +7,9 @@ package mainD;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -16,45 +18,56 @@ import java.util.Scanner;
  */
 public class ListadeCantantesFamosos {
     ArrayList<cantanteFamoso> listaFamoso = new ArrayList<cantanteFamoso>();
+    HashMap <Integer, String> map = new HashMap <Integer, String> ();
     Scanner sc = new Scanner(System.in);
     
-    public void ingresar(cantanteFamoso ob){
+    public void ingresar(int cod, String name, cantanteFamoso ob){
         listaFamoso.add(ob);
+        map.put(cod, name); 
     }
     
     public void imprimir(){
-        for (cantanteFamoso e : listaFamoso) {
-            System.out.println(e.toString());
+        Iterator<Map.Entry<Integer, String>> iteradorMapa = map.entrySet().iterator(); 
+        Iterator<cantanteFamoso> iteradorLista = listaFamoso.iterator();
+        
+        while (iteradorMapa.hasNext() && iteradorLista.hasNext()) {
+            cantanteFamoso ele = iteradorLista.next(); 
+            Map.Entry<Integer, String> entry = iteradorMapa.next();
+            System.out.println("Nombre: " + entry.getValue() + ele); 
         }
     }
     
     public void comparar(){
-        Collections.sort(listaFamoso, new Comparator<cantanteFamoso>() {
-            public int compare(cantanteFamoso c1, cantanteFamoso c2) {
-                return Integer.parseInt(c2.getDiscomasVentas())- Integer.parseInt(c1.getDiscomasVentas());
+       listaFamoso.sort(Comparator.comparingInt(cantanteFamoso::getDiscomasVentas).reversed());
+        HashMap<Integer, cantanteFamoso> discosMap = new HashMap<>();
+        for (cantanteFamoso disco : listaFamoso) {
+            discosMap.put(disco.getCod(), disco);
+        }
+        listaFamoso.clear();
+        for (int codigo : map.keySet()) {
+            cantanteFamoso disco = discosMap.get(codigo);
+            if (disco != null) {
+                listaFamoso.add(disco);
             }
-        });
-    
+        }
     }
     
-    public void eliminar(String nombre){
+    public void eliminar(int cod){
         for (int i = 0; i < listaFamoso.size(); i++) {
-            if (listaFamoso.get(i).getNombre().equals(nombre)) {
+            if (listaFamoso.get(i).getCod() == cod) {
                 // Si encontramos un objeto con el nombre ingresado, lo eliminamos de la lista
-                listaFamoso.remove(i);
-                System.out.println("Se ha eliminado la persona con nombre " + nombre + "\n");
+                listaFamoso.remove(i); 
+                map.remove(i);
+                System.out.println("Se ha eliminado la persona con nombre " + listaFamoso.get(i).getNombre()+ "\n");
                 break;
             }
         }
     }
     
-    public void actualizar(String nombre){
-        System.out.println("Ingrese nuevo nombre: ");
-        String nuevoNombre = sc.next();
-        for (cantanteFamoso p : listaFamoso) {
-            if (p.getNombre().equals(nombre)) {
-                p.setNombre(nuevoNombre);
+    public void actualizar(String nombre, int cod){
+            if (map.containsKey(cod)) {
+            map.replace(cod, nombre);
         }
     }
     }
-}
+
